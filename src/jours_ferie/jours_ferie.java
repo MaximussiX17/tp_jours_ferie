@@ -4,8 +4,11 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 public class jours_ferie {
 	
@@ -37,14 +40,32 @@ public class jours_ferie {
 		}
 	}
 	
-	public void jourFeriePasLeWeekEnd(int anneeChoisi) {
+	public boolean jourFeriePasLeWeekEnd(int anneeChoisi) throws ParseException {
 		if(anneeChoisi> 1999 && anneeChoisi<2026) {
-			Calendar c = Calendar.getInstance();
 			
+			Calendar c = Calendar.getInstance();
+			String strAnneeChoisi = Integer.toString(anneeChoisi);
+			
+			for(int i=0; i<this.date.size(); i++) {
+				
+				String a = this.date.get(i).split("-")[0];
+				if(a.equals(strAnneeChoisi)) {
+					Date d = new SimpleDateFormat("yyyy-MM-dd").parse(this.date.get(i));
+					c.setTime(d);
+					int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
+					if(dayOfWeek != Calendar.SATURDAY && dayOfWeek != Calendar.SUNDAY) {
+						System.out.println(dayOfWeek+" : "+this.date.get(i)+" "+this.nom_jour.get(i));
+					}
+				}
+			}
+			return true;
 		}else {
 			System.out.println("mauvaise année pas de traitement");
+			return false;
 		}
 	}
+	
+	
 	
 	public void readCsv()  {
 		String csvFile = "jours_feries_metropole.csv";
