@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class jours_ferie {
 	
@@ -18,17 +19,28 @@ public class jours_ferie {
 		
 	}
 	
-	public void afficheJour(int anneeChoisi) {
+	public boolean afficheJour(int anneeChoisi) {
 		if(anneeChoisi> 1999 && anneeChoisi<2026) {
 			String strAnneeChoisi = Integer.toString(anneeChoisi);
 			for(int i=0; i<this.date.size(); i++) {
 				String a = this.date.get(i).split("-")[0];
-				//System.out.println(a);
 				if(a.equals(strAnneeChoisi)) {
 					System.out.println(this.date.get(i)+" "+this.nom_jour.get(i));
 				}
-				
 			}
+			// comme la fonction est un simple affichage pour les tests il est plus evident de retourner un boolean.
+			// C'est aussi plus évident aussi par rapport au temps que l'on dispose.
+			return true; 
+		}else {
+			System.out.println("mauvaise année pas de traitement");
+			return false;
+		}
+	}
+	
+	public void jourFeriePasLeWeekEnd(int anneeChoisi) {
+		if(anneeChoisi> 1999 && anneeChoisi<2026) {
+			Calendar c = Calendar.getInstance();
+			
 		}else {
 			System.out.println("mauvaise année pas de traitement");
 		}
